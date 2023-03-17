@@ -20,11 +20,19 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): Response
     {
+        $this->info('trying this');
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'file' => 'required|mimes:jpg,jpeg,png,csv,txt,xlx,xls,pdf|max:2048'
         ]);
+
+        if($request->file('file')){
+            $file= $request->file('file');
+            $filename= date('YmdHi').$file->getClientOriginalName();
+            $file-> move(public_path('public/image'), $filename);
+        }
 
         $user = User::create([
             'name' => $request->name,
