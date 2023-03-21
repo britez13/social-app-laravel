@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->integer('userId');
+            $table->foreignId('userId');
             $table->longText('description');
             
             $table->timestamps();
