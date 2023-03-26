@@ -22,22 +22,25 @@ class RegisteredUserController extends Controller
     {
         // return $request->all();
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            // 'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'file' => 'required|mimes:jpg,jpeg,png,csv,txt,xlx,xls,pdf|max:2048'
         ]);
 
+        $filename = '';
+
         if($request->file('file')){
             $file= $request->file('file');
             $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('public/image'), $filename);
+            $file-> move(public_path('/images'), $filename);
         }
 
         $user = User::create([
-            'name' => $request->name,
+            // 'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'file' => url('/public/' . $filename)
         ]);
 
         event(new Registered($user));
