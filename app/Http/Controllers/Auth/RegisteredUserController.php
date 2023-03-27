@@ -30,17 +30,18 @@ class RegisteredUserController extends Controller
 
         $filename = '';
 
-        if($request->file('file')){
-            $file= $request->file('file');
-            $filename= date('YmdHi').$file->getClientOriginalName();
-            $file-> move(public_path('/images'), $filename);
+        if($request->file('file'))
+        {
+            $file = $request->file('file');
+            $filename = date('YmdHi').$file->getClientOriginalName();
+            $file->move(public_path('/images'), $filename);
         }
 
         $user = User::create([
             // 'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'file' => url('/public/' . $filename)
+            'file' => url('/images' . $filename)
         ]);
 
         event(new Registered($user));
