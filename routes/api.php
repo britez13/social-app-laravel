@@ -24,7 +24,8 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::get('/posts', [PostController::class, 'index']);
 Route::post('/posts', [PostController::class, 'store']);
-Route::post('/like', );
+Route::post('/like', [LikeController::class, 'store']);
+
 // Route::get('/users', function() {
 //     return User::all()->toJson();
 // });

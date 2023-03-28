@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Like extends Model
 {
@@ -13,4 +14,9 @@ class Like extends Model
         'user_id',
         'post_id'
     ];
+
+    public function post(): BelongsTo
+    {
+        return $this->belongsTo(Post::class);
+    }
 }
