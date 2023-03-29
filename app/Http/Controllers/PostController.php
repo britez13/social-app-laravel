@@ -11,7 +11,7 @@ class PostController extends Controller
 
     public function index() 
     {
-        return Post::all()->toJson();
+        return Post::with('like')->get()->toJson();
     }
 
     //

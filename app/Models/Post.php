@@ -27,5 +27,8 @@ class Post extends Model
         return $this->hasMany(Like::class);
     }
 
-
+    public function comment(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
